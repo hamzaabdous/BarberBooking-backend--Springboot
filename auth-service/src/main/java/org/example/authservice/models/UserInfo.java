@@ -24,6 +24,9 @@ public class UserInfo {
     @Column(name = "ID")
     private long id;
     private String username;
+    private String email;
+    private String phone;
+    private String country;
     @JsonIgnore
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
