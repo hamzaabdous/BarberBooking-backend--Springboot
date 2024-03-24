@@ -27,6 +27,8 @@ public class UserInfo {
     private String email;
     private String phone;
     private String country;
+    private String address;
+
     @JsonIgnore
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
