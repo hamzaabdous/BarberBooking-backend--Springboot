@@ -5,10 +5,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.example.authservice.models.UserInfo;
+import org.example.authservice.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +22,11 @@ import java.util.function.Function;
 
 @Component
 public class JwtService {
+    @Autowired
+    UserRepository userRepository;
 
     public static final String SECRET = "357638792F423F4428472B4B6250655368566D597133743677397A2443264629";
-
+    public static Collection<? extends GrantedAuthority> rolesUser = null;
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -47,7 +54,11 @@ public class JwtService {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+
         final String username = extractUsername(token);
+
+
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
@@ -61,10 +72,11 @@ public class JwtService {
 
 
     private String createToken(Map<String, Object> claims, String username) {
-
+        UserInfo user= userRepository.findByUsername(username);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
+                .claim("roles", user.getRoles())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+ 1000 * 60 * 60 * 24))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();

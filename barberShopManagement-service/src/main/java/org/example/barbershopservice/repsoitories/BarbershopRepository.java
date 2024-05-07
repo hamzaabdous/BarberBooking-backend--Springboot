@@ -1,7 +1,7 @@
-package org.example.orderservice.repsoitories;
+package org.example.barbershopservice.repsoitories;
 
-import org.example.orderservice.entities.Order;
+import org.example.barbershopservice.entities.Barbershop;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface OrderRepository extends JpaRepository<Order, String> {
+public interface BarbershopRepository extends JpaRepository<Barbershop, String> {
 }

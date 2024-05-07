@@ -19,7 +19,8 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/v1")
+@CrossOrigin(origins= "http://localhost:8081")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
@@ -35,7 +36,7 @@ public class UserController {
     @Autowired
     private  AuthenticationManager authenticationManager;
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/auth/save")
     public ResponseEntity saveUser(@RequestBody UserRequest userRequest) {
         try {
             UserResponse userResponse = userService.saveUser(userRequest);
@@ -45,7 +46,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users")
+    @GetMapping("/users/")
     public ResponseEntity getAllUsers() {
         try {
             List<UserResponse> userResponses = userService.getAllUser();
@@ -56,7 +57,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/profile")
+    @PostMapping("/users/profile")
     public ResponseEntity<UserResponse> getUserProfile() {
         try {
         UserResponse userResponse = userService.getUser();
@@ -67,7 +68,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/test")
+    @GetMapping("/users/test")
     public String test() {
         try {
             return "Welcome";
@@ -76,7 +77,8 @@ public class UserController {
         }
     }
 
-    @PostMapping("/login")
+    @CrossOrigin(origins= "http://localhost:8081")
+    @PostMapping("/auth/login")
     public JwtResponseDTO AuthenticateAndGetToken(@RequestBody AuthRequestDTO authRequestDTO){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
         if(authentication.isAuthenticated()){
@@ -92,7 +94,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/refreshToken")
+    @PostMapping("/auth/refreshToken")
     public JwtResponseDTO refreshToken(@RequestBody RefreshTokenRequestDTO refreshTokenRequestDTO){
         return refreshTokenService.findByToken(refreshTokenRequestDTO.getToken())
                 .map(refreshTokenService::verifyExpiration)

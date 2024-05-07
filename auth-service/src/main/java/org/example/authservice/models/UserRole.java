@@ -9,7 +9,7 @@ import lombok.ToString;
 
 @Entity
 @Data
-@ToString
+//@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ROLES")
@@ -20,5 +20,8 @@ public class UserRole {
     @Column(name = "ID")
     private long id;
     private String name;
-
+    @Override
+    public String toString() {
+        return name+",";
+    }
 }

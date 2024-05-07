@@ -1,7 +1,7 @@
 package org.example.barbershopservice.repsoitories;
 
-import org.example.barbershopservice.entities.Booking;
+import org.example.barbershopservice.entities.Service;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BookingRepository extends JpaRepository<Booking, String> {
+public interface ServiceRepository extends JpaRepository<Service, String> {
 }
