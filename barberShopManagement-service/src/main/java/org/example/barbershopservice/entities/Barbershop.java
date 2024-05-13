@@ -6,7 +6,9 @@ import org.example.barbershopservice.model.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter @Builder @ToString
@@ -27,6 +29,9 @@ public class Barbershop {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "barbershop", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Barber> barbers = new HashSet<>();
 
-
+    @OneToMany(mappedBy = "barbershop")
+    private Set<Service> services;
 }
