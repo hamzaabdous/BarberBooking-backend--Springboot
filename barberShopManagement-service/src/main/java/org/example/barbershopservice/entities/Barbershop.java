@@ -34,4 +34,7 @@ public class Barbershop {
 
     @OneToMany(mappedBy = "barbershop")
     private Set<Service> services;
+
+    @OneToMany(mappedBy = "barbershop", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Booking> bookings = new HashSet<>();
 }

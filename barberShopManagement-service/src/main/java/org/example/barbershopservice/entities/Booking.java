@@ -23,14 +23,21 @@ public class Booking {
     @Transient
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "service_id", referencedColumnName = "id")
-    private Service service;
 
     private LocalDateTime bookingTime;
     private String status; // Consider using an Enum (PENDING, CONFIRMED, COMPLETED, CANCELLED)
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
+
+
+    @ManyToOne
+    @JoinColumn(name = "barbershop_id")
+    private Barbershop barbershop;
 
 }
