@@ -16,9 +16,7 @@ public class Service {
     @Column(name = "id")
     private Long services_id;
 
-    @ManyToOne
-    @JoinColumn(name = "barbershop_id", referencedColumnName = "id")
-    private Barbershop barbershop;
+
 
     private String name;
     private String description;
@@ -27,5 +25,7 @@ public class Service {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-
+    @ManyToOne
+    @JoinColumn(name = "barbershop_id", referencedColumnName = "id")
+    private Barbershop barbershop;
 }

@@ -5,6 +5,8 @@ import lombok.*;
 import org.example.barbershopservice.model.User;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -40,4 +42,6 @@ public class Booking {
     @JoinColumn(name = "barbershop_id")
     private Barbershop barbershop;
 
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<BookingStatus> statuses = new HashSet<>();
 }
